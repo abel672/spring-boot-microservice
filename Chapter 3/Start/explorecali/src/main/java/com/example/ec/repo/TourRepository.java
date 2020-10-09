@@ -5,6 +5,7 @@ import com.example.ec.domain.Region;
 import com.example.ec.domain.Tour;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Collection;
 import java.util.List;
@@ -15,5 +16,5 @@ import java.util.List;
  * Created by Mary Ellen Bowman
  */
 public interface TourRepository extends CrudRepository<Tour,Integer> {
-
+    List<Tour> findByTourPackageCode(@Param("code") String code);
 }

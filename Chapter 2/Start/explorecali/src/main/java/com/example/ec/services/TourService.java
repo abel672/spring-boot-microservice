@@ -22,11 +22,11 @@ public class TourService {
     }
 
     public Tour createTour(String title, String description, String blurb, Integer price, String duration,
-                           String bullets, String keywords, String tourPackageCode, Difficulty difficulty,
+                           String bullets, String keywords, String tourPackageName, Difficulty difficulty,
                            Region region) {
-        TourPackage tourPackage = tourPackageRepository.findOne(tourPackageCode);
+        TourPackage tourPackage = tourPackageRepository.findByName(tourPackageName);
         if (tourPackage == null) {
-            throw new RuntimeException("Tour package does not exists: " + tourPackageCode);
+            throw new RuntimeException("Tour package does not exists: " + tourPackageName);
         }
         return tourRepository.save(new Tour(title, description, blurb, price, duration, bullets,
                 keywords, tourPackage, difficulty, region));

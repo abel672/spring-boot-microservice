@@ -40,6 +40,14 @@ public class TourRatingController {
 
     }
 
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void createTourRating(@PathVariable(value = "tourId") int tourId, @RequestBody @Validated RatingDto ratingDto) {
+        Tour tour = verifyTour(tourId);
+        tourRatingRepository.save(new TourRating(new TourRatingPk(tour, ratingDto.getCustomerId()), ratingDto.getScore(),
+                ratingDto.getComment()));
+    }
+
 
     /**
      * Convert the TourRating entity to a RatingDto

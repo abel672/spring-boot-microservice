@@ -15,6 +15,7 @@ import java.util.List;
  *
  * Created by Mary Ellen Bowman
  */
+// to don't expose this repository in Spring Data Rest
 @RepositoryRestResource(exported = false)
 public interface TourRatingRepository extends CrudRepository<TourRating, TourRatingPk> {
 

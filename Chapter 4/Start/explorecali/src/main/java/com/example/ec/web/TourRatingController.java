@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
  *
  * Created by Mary Ellen Bowman
  */
+// REST CONTROLLER
 @RestController
 @RequestMapping(path = "/tours/{tourId}/ratings")
 public class TourRatingController {

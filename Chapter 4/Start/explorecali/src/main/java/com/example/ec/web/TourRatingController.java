@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.AbstractMap;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
 /**
@@ -48,6 +49,20 @@ public class TourRatingController {
                 ratingDto.getComment()));
     }
 
+    @RequestMapping(method = RequestMethod.GET)
+    public List<RatingDto> getAllRatingsForTour(@PathVariable(value = "tourId") int tourId) {
+        verifyTour(tourId);
+        return tourRatingRepository.findByPkTourId(tourId).stream().map(this::toDto)
+                .collect(Collectors.toList());
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "/average")
+    public AbstractMap.SimpleEntry<String, Double> getAverage(@PathVariable(value = "tourId") int tourId) {
+        verifyTour(tourId);
+        List<TourRating> tourRatings = tourRatingRepository.findByPkTourId(tourId);
+        OptionalDouble average = tourRatings.stream().mapToInt(TourRating::getScore).average();
+        return new AbstractMap.SimpleEntry<String, Double>("average", average.isPresent() ? average.getAsDouble() : null);
+    }
 
     /**
      * Convert the TourRating entity to a RatingDto

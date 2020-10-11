@@ -50,10 +50,12 @@ public class TourRatingController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<RatingDto> getAllRatingsForTour(@PathVariable(value = "tourId") int tourId) {
+    public Page<RatingDto> getAllRatingsForTour(@PathVariable(value = "tourId") int tourId, Pageable pageable) {
         verifyTour(tourId);
-        return tourRatingRepository.findByPkTourId(tourId).stream().map(this::toDto)
+        Page<TourRating> tourRatingPage = tourRatingRepository.findByPkTourId(tourId, pageable);
+        List<RatingDto> ratingDtoList = tourRatingPage.getContent().stream().map(this::toDto)
                 .collect(Collectors.toList());
+        return new PageImpl<RatingDto>(ratingDtoList, pageable, tourRatingPage.getTotalPages());
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/average")

@@ -6,6 +6,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.data.rest.core.annotation.RestResource;
 
+import java.util.Optional;
+
 /**
  * Tour Package Repository Interface
  *
@@ -20,7 +22,7 @@ public interface TourPackageRepository extends CrudRepository<TourPackage, Strin
      * @param name name of the tour.
      * @return TourPackage if found, null otherwise.
      */
-    TourPackage findByName(@Param("name") String name);
+    Optional<TourPackage> findByName(@Param("name") String name);
 
     //Not exposed by Spring Data REST
     @Override

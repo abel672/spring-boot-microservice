@@ -35,12 +35,12 @@ public interface TourRepository extends PagingAndSortingRepository<Tour,Integer>
     //Not exposed by Spring Data REST
     @Override
     @RestResource(exported = false)
-    <S extends Tour> Iterable<S> save(Iterable<S> iterable);
+    <S extends Tour> Iterable<S> saveAll(Iterable<S> iterable);
 
     //Not exposed by Spring Data REST
     @Override
     @RestResource(exported = false)
-    void delete(Integer integer);
+    void deleteById(Integer integer);
 
     //Not exposed by Spring Data REST
     @Override
@@ -50,7 +50,7 @@ public interface TourRepository extends PagingAndSortingRepository<Tour,Integer>
     //Not exposed by Spring Data REST
     @Override
     @RestResource(exported = false)
-    void delete(Iterable<? extends Tour> iterable);
+    void deleteAll(Iterable<? extends Tour> iterable);
 
     //Not exposed by Spring Data REST
     @Override

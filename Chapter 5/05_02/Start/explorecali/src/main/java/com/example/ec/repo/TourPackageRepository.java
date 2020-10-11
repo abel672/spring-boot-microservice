@@ -30,12 +30,12 @@ public interface TourPackageRepository extends CrudRepository<TourPackage, Strin
     //Not exposed by Spring Data REST
     @Override
     @RestResource(exported = false)
-    <S extends TourPackage> Iterable<S> save(Iterable<S> iterable);
+    <S extends TourPackage> Iterable<S> saveAll(Iterable<S> iterable);
 
     //Not exposed by Spring Data REST
     @Override
     @RestResource(exported = false)
-    void delete(String s);
+    void deleteById(String s);
 
     //Not exposed by Spring Data REST
     @Override
@@ -45,7 +45,7 @@ public interface TourPackageRepository extends CrudRepository<TourPackage, Strin
     //Not exposed by Spring Data REST
     @Override
     @RestResource(exported = false)
-    void delete(Iterable<? extends TourPackage> iterable);
+    void deleteAll(Iterable<? extends TourPackage> iterable);
 
     //Not exposed by Spring Data REST
     @Override

@@ -9,6 +9,8 @@ import com.example.ec.repo.TourRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 /**
  * Tour  Service
  *
@@ -30,24 +32,14 @@ public class TourService {
      * Create a new Tour Object and persist it to the Database.
      *
      * @param title
-     * @param description
-     * @param blurb
-     * @param price
-     * @param duration
-     * @param bullets
-     * @param keywords
      * @param tourPackageName
-     * @param difficulty
-     * @param region
-     * @return Tour Entity
+     * @param details
+     * @return
      */
-    public Tour createTour(String title, String description, String blurb, Integer price,
-                           String duration, String bullets,
-                           String keywords, String tourPackageName, Difficulty difficulty, Region region ) {
+    public Tour createTour(String title, String tourPackageName, Map<String, String> details) {
         TourPackage tourPackage = tourPackageRepository.findByName(tourPackageName).orElseThrow(() ->
                 new RuntimeException("Tour package does not exist: " + tourPackageName));
-        return tourRepository.save(new Tour(title, description,blurb, price, duration,
-                bullets, keywords, tourPackage, difficulty, region));
+        return tourRepository.save(new Tour(title, tourPackage, details));
     }
 
     /**

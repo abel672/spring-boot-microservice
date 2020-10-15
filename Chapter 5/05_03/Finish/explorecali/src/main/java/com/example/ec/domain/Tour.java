@@ -29,7 +29,7 @@ public class Tour implements Serializable{
     private String tourPackageName;
 
 
-    public Tour(String title, Map<String, String> details, TourPackage tourPackage) {
+    public Tour(String title, TourPackage tourPackage, Map<String, String> details) {
         this.title = title;
         this.details = details;
         this.tourPackageName = tourPackage.getName();

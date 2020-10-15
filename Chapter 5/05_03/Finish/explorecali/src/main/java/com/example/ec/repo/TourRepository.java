@@ -1,30 +1,28 @@
 package com.example.ec.repo;
 
-import com.example.ec.domain.Difficulty;
-import com.example.ec.domain.Region;
 import com.example.ec.domain.Tour;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.mongodb.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RestResource;
-
-import java.util.List;
 
 /**
  * Tour Repository Interface
  *
  * Created by Mary Ellen Bowman
  */
-public interface TourRepository extends PagingAndSortingRepository<Tour,Integer> {
+public interface TourRepository extends PagingAndSortingRepository<Tour,String > {
     /**
-     * Lookup a Page of Tours associated with a TourPackage
+     * Only return the main fields of a Tour, not the details
      *
-     * @param code the tour Package code.
-     * @param pageable details for finding the correct page.
-     * @return A page of tours if found, empty otherwise.
+     * @param code
+     * @param pageable
+     * @return tours without details
      */
+    @Query(value = "{'tourPackCode' : ?0}",
+            fields = "{ 'id':1, 'title':1, 'tourPackageCode':1, 'tourPackageName':1}")
     Page<Tour> findByTourPackageCode(@Param("code") String code, Pageable pageable);
 
     //Not exposed by Spring Data REST
@@ -40,7 +38,7 @@ public interface TourRepository extends PagingAndSortingRepository<Tour,Integer>
     //Not exposed by Spring Data REST
     @Override
     @RestResource(exported = false)
-    void deleteById(Integer integer);
+    void deleteById(String string);
 
     //Not exposed by Spring Data REST
     @Override

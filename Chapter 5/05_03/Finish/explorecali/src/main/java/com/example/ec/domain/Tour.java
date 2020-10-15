@@ -1,7 +1,11 @@
 package com.example.ec.domain;
 
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.io.Serializable;
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -9,61 +13,33 @@ import java.util.Objects;
  *
  * Created by Mary Ellen Bowman
  */
-@Entity
+@Document
 public class Tour implements Serializable{
     @Id
-    @GeneratedValue
-    private Integer id;
+    private String id;
 
-    @Column
+    @Indexed
     private String title;
 
-    @Column(length = 2000)
-    private String description;
+    @Indexed
+    private String tourPackageCode;
 
-    @Column(length = 2000)
-    private String blurb;
+    private Map<String, String> details;
 
-    @Column
-    private Integer price;
-
-    @Column
-    private String duration;
-
-    @Column(length = 2000)
-    private String bullets;
-
-    @Column
-    private String keywords;
+    private String tourPackageName;
 
 
-    @ManyToOne
-    private TourPackage tourPackage;
-
-    @Column
-    private Difficulty difficulty;
-
-    @Column
-    private Region region;
-
-    public Tour(String title, String description, String blurb, Integer price, String duration, String bullets,
-                String keywords, TourPackage tourPackage, Difficulty difficulty, Region region) {
+    public Tour(String title, Map<String, String> details, TourPackage tourPackage) {
         this.title = title;
-        this.description = description;
-        this.blurb = blurb;
-        this.price = price;
-        this.duration = duration;
-        this.bullets = bullets;
-        this.keywords = keywords;
-        this.tourPackage = tourPackage;
-        this.difficulty = difficulty;
-        this.region = region;
+        this.details = details;
+        this.tourPackageName = tourPackage.getName();
+        this.tourPackageCode = tourPackage.getCode();
     }
 
     protected Tour() {
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
@@ -75,93 +51,16 @@ public class Tour implements Serializable{
         this.title = title;
     }
 
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getBlurb() {
-        return blurb;
-    }
-
-    public void setBlurb(String blurb) {
-        this.blurb = blurb;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
-
-    public String getDuration() {
-        return duration;
-    }
-
-    public void setDuration(String duration) {
-        this.duration = duration;
-    }
-
-    public String getBullets() {
-        return bullets;
-    }
-
-    public void setBullets(String bullets) {
-        this.bullets = bullets;
-    }
-
-    public String getKeywords() {
-        return keywords;
-    }
-
-    public TourPackage getTourPackage() {
-        return tourPackage;
-    }
-
-    public void setTourPackage(TourPackage tourPackage) {
-        this.tourPackage = tourPackage;
-    }
-
-    public void setKeywords(String keywords) {
-        this.keywords = keywords;
-    }
-
-    public Difficulty getDifficulty() {
-        return difficulty;
-    }
-
-    public void setDifficulty(Difficulty difficulty) {
-        this.difficulty = difficulty;
-    }
-
-    public Region getRegion() {
-        return region;
-    }
-
-    public void setRegion(Region region) {
-        this.region = region;
-    }
-
     @Override
     public String toString() {
-        return "Tour{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", blurb='" + blurb + '\'' +
-                ", price=" + price +
-                ", duration='" + duration + '\'' +
-                ", bullets='" + bullets + '\'' +
-                ", keywords='" + keywords + '\'' +
-                ", tourPackage=" + tourPackage +
-                ", difficulty=" + difficulty +
-                ", region=" + region +
-                '}';
+        final StringBuilder sb = new StringBuilder("Tour{");
+        sb.append("id='").append(id).append('\'');
+        sb.append(", title='").append(title).append('\'');
+        sb.append(", tourPackageCode='").append(tourPackageCode).append('\'');
+        sb.append(", details=").append(details);
+        sb.append(", tourPackageName='").append(tourPackageName).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 
     @Override
@@ -171,19 +70,13 @@ public class Tour implements Serializable{
         Tour tour = (Tour) o;
         return Objects.equals(id, tour.id) &&
                 Objects.equals(title, tour.title) &&
-                Objects.equals(description, tour.description) &&
-                Objects.equals(blurb, tour.blurb) &&
-                Objects.equals(price, tour.price) &&
-                Objects.equals(duration, tour.duration) &&
-                Objects.equals(bullets, tour.bullets) &&
-                Objects.equals(keywords, tour.keywords) &&
-                Objects.equals(tourPackage, tour.tourPackage) &&
-                difficulty == tour.difficulty &&
-                region == tour.region;
+                Objects.equals(tourPackageCode, tour.tourPackageCode) &&
+                Objects.equals(details, tour.details) &&
+                Objects.equals(tourPackageName, tour.tourPackageName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, blurb, price, duration, bullets, keywords, tourPackage, difficulty, region);
+        return Objects.hash(id, title);
     }
 }

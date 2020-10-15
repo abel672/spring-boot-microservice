@@ -1,8 +1,8 @@
 package com.example.ec.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -11,12 +11,11 @@ import java.util.Objects;
  *
  * Created by Mary Ellen Bowman
  */
-@Entity
+@Document
 public class TourPackage implements Serializable {
     @Id
     private String code;
 
-    @Column
     private String name;
 
     protected TourPackage() {

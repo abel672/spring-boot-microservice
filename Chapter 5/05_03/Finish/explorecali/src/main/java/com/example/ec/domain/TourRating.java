@@ -39,10 +39,11 @@ public class TourRating {
      * @param score      Integer score (1-5)
      * @param comment    Optional comment from the customer
      */
-    public TourRating(String tourId, Integer score, String comment) {
+    public TourRating(String tourId, Integer customerId, Integer score, String comment) {
         this.tourId = tourId;
         this.score = score;
         this.comment = comment;
+        this.customerId = customerId;
     }
 
     protected TourRating() {

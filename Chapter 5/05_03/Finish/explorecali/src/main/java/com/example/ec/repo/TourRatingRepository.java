@@ -33,7 +33,7 @@ public interface TourRatingRepository extends CrudRepository<TourRating, String>
      * @param pageable details for the desired page
      * @return a Page of any found TourRatings
      */
-    Page<TourRating> findByPkTourId(String tourId, Pageable pageable);
+    Page<TourRating> findByTourId(String tourId, Pageable pageable);
 
     /**
      * Lookup a TourRating by the TourId and Customer Id
